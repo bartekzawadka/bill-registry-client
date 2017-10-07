@@ -119,10 +119,10 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
 fi
 
 # 4. Install Bower modules
-if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
+if [ -e "$DEPLOYMENT_TARGET/.angular-cli.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval ./node_modules/.bin/bower install
-  exitWithMessageOnError "bower failed"
+  eval ./node_modules/.bin/ng build --prod
+  exitWithMessageOnError "Angular build failed"
   cd - > /dev/null
 fi
 
