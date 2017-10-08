@@ -19,9 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/hammerjs/hammer.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -54,8 +56,9 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {},
+    "styleExt": "scss",
+    "component": {
+    },
     "serve": {
       "port": 80
     }

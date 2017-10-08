@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+  margin: 0;
+}
+
+@font-face {
+  font-family: KabelFamily;
+  src: url('assets/fonts/Kabel Book BT.ttf');
+}
+
+.mat-toolbar.mat-primary{
+  background: #006699;
+}
+
+h1.site-name {
+  font-family: KabelFamily;
+  font-weight: 100;
+  font-size: 2.5em;
+  margin-left: 10px;
+  /*color: #488aff;*/
+  color: #fafafa;
+}
