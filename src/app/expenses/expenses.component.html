@@ -1,3 +1,17 @@
-<p>
-  expenses works!
-</p>
+<div class="list-container">
+  <mat-card>
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let item of expenses">
+        <div fxLayout="row" fxLayoutAlign="stretch center" fxFlex class="custom-list-item-row">
+          <div fxFlex>
+            <div class="custom-list-item-heading">{{item.name}}</div>
+            <div class="custom-list-item-subheading">{{item.created | date: 'dd-MM-yyyy HH:mm:ss'}}</div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div class="custom-list-item-amount">{{item.amountText}} zł</div>
+          </div>
+        </div>
+      </a>
+    </mat-nav-list>
+  </mat-card>
+</div>

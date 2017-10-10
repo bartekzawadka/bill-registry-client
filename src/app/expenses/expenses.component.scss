@@ -1,0 +1,26 @@
+@import '../../app-theme';
+
+.custom-list-item-heading {
+  font-size: 1.1em;
+  color: mat-color($mat-grey, 700);
+  margin-bottom: 5px;
+}
+
+.custom-list-item-subheading {
+  font-size: 0.7em;
+  color: mat-color($mat-grey, 600);
+}
+
+.custom-list-item-amount {
+  font-size: 1.2em;
+  color: mat-color($mat-grey, 800);
+}
+
+.custom-list-item-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mat-nav-list .mat-list-item .mat-list-item-content {
+  height: auto !important;
+}

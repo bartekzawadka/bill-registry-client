@@ -11,8 +11,4 @@ export class LoaderDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<LoaderDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 }
