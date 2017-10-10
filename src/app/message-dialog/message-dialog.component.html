@@ -1,0 +1,22 @@
+<div>
+  <div fxLayout="row" fxFlex fxLayoutAlign="stretch center">
+    <div fxFlex>
+      <h4 class="mat-title" style="margin: 0 auto;">{{data.title}}</h4>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content>
+  <div fxFlex fxLayout="row" fxLayoutAlign="start center">
+    <div style="padding-right: 15px" *ngIf="data.type">
+      <mat-icon class="icon-{{data.type}}">{{data.type}}</mat-icon>
+      <!--<mat-icon color="{{mat-color($mat-red, 800)}}" *ngIf="type.color != 'red'">{{type.icon}}</mat-icon>-->
+      <!--<mat-icon *ngIf="type.color == 'red'" class="icon-error">{{type.icon}}</mat-icon>-->
+    </div>
+    <p class="mat-body-2">{{data.message}}</p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex>
+    <button mat-raised-button (click)="onOkClick()">OK</button>
+  </div>
+</div>

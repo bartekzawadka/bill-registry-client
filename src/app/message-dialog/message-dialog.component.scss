@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+@import '../../app-theme';
+
+.icon-error {
+  color: mat-color($mat-red, 800);
+}
+.icon-warning {
+  color: mat-color($candy-app-warn);
+}
+.icon-info {
+  color: mat-color($mat-blue, 500);
+}
+
+.mat-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.material-icons {
+  font-size: 36px;
+}
+
+.mat-dialog-container {
+  min-width: 30vw !important;
+}
