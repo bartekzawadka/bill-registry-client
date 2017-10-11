@@ -3,6 +3,8 @@ import {BillRegistryService} from '../bill-registry.service';
 import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
+import {ExpensesDataSet} from '../../models/ExpensesDataSet';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-expenses',
@@ -12,10 +14,7 @@ import {MessageDialogComponent} from '../message-dialog/message-dialog.component
 })
 export class ExpensesComponent implements OnInit {
 
-  private pageIndex = 0;
-  private pageSize = 50;
-
-  private expenses: any;
+  private expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
 
   constructor(private brService: BillRegistryService,
               public dialog: MatDialog) {
@@ -30,11 +29,9 @@ export class ExpensesComponent implements OnInit {
       disableClose: true
     });
 
-    this.brService.getExpenses(this.pageIndex, this.pageSize).then((data) => {
-      dialogRef.close();
-      console.log(data);
+    this.brService.getExpenses(this.expenses.PageIndex, this.expenses.PageSize).then((data) => {
       this.expenses = data;
-
+      dialogRef.close();
     }, (error) => {
       dialogRef.close();
 

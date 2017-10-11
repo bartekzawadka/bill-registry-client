@@ -1,10 +1,17 @@
 <mat-toolbar color="primary">
   <img src="../assets/img/logo_reversed_60.png" height="60">
-  <h1 class="site-name">Bill Registry</h1>
+  <div class="site-title">Bill Registry</div>
   <span class="spacer"></span>
-  <button mat-raised-button color="accent">
-    <mat-icon>add</mat-icon>
-    New expense</button>
+  <div fxLayout="row" fxLayoutGap="15px">
+    <button mat-button routerLink="expenses">
+      <mat-icon>list</mat-icon>
+      Expenses
+    </button>
+    <button mat-raised-button color="accent" routerLink="expense">
+      <mat-icon>add</mat-icon>
+      New expense
+    </button>
+  </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
 

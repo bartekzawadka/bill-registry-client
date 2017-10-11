@@ -1,7 +1,7 @@
 <div class="list-container">
   <mat-card>
-    <mat-nav-list>
-      <a mat-list-item *ngFor="let item of expenses">
+    <mat-nav-list *ngIf="expenses.Rows && expenses.Rows.length > 0">
+      <a mat-list-item *ngFor="let item of expenses.Rows" routerLink="/expense/{{item._id}}">
         <div fxLayout="row" fxLayoutAlign="stretch center" fxFlex class="custom-list-item-row">
           <div fxFlex>
             <div class="custom-list-item-heading">{{item.name}}</div>
@@ -13,5 +13,7 @@
         </div>
       </a>
     </mat-nav-list>
+    <mat-paginator [pageSize]="expenses.PageSize" [length]="expenses.TotalCount"
+                   *ngIf="expenses.Rows && expenses.Rows.length > 0"></mat-paginator>
   </mat-card>
 </div>

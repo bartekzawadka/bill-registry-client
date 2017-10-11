@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {ExpensesDataSet} from '../models/ExpensesDataSet';
+import {ExpenseItem} from '../models/ExpenseItem';
 
 @Injectable()
 export class BillRegistryService {
@@ -8,13 +10,58 @@ export class BillRegistryService {
   constructor(private http: Http) {
   }
 
+  private static handleError(error: any, reject: (any) => void) {
+    if (error && error.error) {
+      reject(error.error);
+    } else if (error && error.statusText) {
+      reject(error.statusText);
+    } else {
+      reject(error);
+    }
+  }
+
+  getExpense(id) {
+    return new Promise<ExpenseItem>((resolve, reject) => {
+      this.http.get('http://localhost:3030/api/expense/' + id).map((res) => res.json()).subscribe((data) => {
+
+        const dataSet = new ExpenseItem();
+        dataSet.Name = data.name;
+        dataSet.Description = data.description;
+        dataSet.Amount = data.amount;
+        dataSet.CreatedAtDate = data.created;
+
+        resolve(dataSet);
+      }, (error) => {
+        BillRegistryService.handleError(error, reject);
+      });
+    });
+  }
+
   getExpenses(pageIndex: number = 0, pageSize: number = 50) {
-    return new Promise((resolve, reject) => {
+    return new Promise<ExpensesDataSet>((resolve, reject) => {
       this.http.get('http://localhost:3030/api/expenses?skip=' +
         pageIndex + '&limit=' + pageSize).map((res) => res.json()).subscribe((data) => {
+
+        const dataSet = new ExpensesDataSet(data.rows, data.count, pageIndex, pageSize);
+
+        resolve(dataSet);
+      }, (error) => {
+        BillRegistryService.handleError(error, reject);
+      });
+    });
+  }
+
+  sendExpense(expense: ExpenseItem) {
+    return new Promise((resolve, reject) => {
+      this.http.post('http://localhost:3030/api/expense', {
+        name: expense.Name,
+        description: expense.Description,
+        amount: expense.Amount,
+        bill: expense.BillData
+      }).map((res) => res.json()).subscribe((data) => {
         resolve(data);
       }, (error) => {
-        reject(error);
+        BillRegistryService.handleError(error, reject);
       });
     });
   }

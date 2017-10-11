@@ -1,0 +1,38 @@
+<div class="list-container">
+  <mat-card>
+    <h3 class="mat-title">Create new expense</h3>
+    <form #f="ngForm" class="form-flex" (ngSubmit)="submit(f.value)">
+      <mat-form-field>
+        <input matInput placeholder="Name" required name="name" [(ngModel)]="Expense.Name">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Description" name="description" [(ngModel)]="Expense.Description"></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput currencyMask placeholder="Amount" name="amount"
+               [options]="{suffix: ' zł', thousands: ' ', decimal: ',', prefix: ''}" required [(ngModel)]="Expense.Amount">
+      </mat-form-field>
+      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;"
+           matTooltip="Feature not supported yet!">
+        <button mat-raised-button color="warn" disabled>SCAN BILL</button>
+      </div>
+      <mat-action-row>
+        <button mat-raised-button (click)="goBack()">
+          <mat-icon>close</mat-icon>
+          Cancel
+        </button>
+        <div fxFlex></div>
+        <div fxLayout="row" fxLayoutGap="15px">
+          <button mat-raised-button type="reset">
+            <mat-icon>clear_all</mat-icon>
+            Clear
+          </button>
+          <button mat-raised-button color="accent" type="submit" [disabled]="!f.valid">
+            <mat-icon>send</mat-icon>
+            Submit
+          </button>
+        </div>
+      </mat-action-row>
+    </form>
+  </mat-card>
+</div>
