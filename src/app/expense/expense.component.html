@@ -1,6 +1,11 @@
 <div class="list-container">
   <mat-card>
-    <h3 class="mat-title">Create new expense</h3>
+    <div fxLayout="row">
+    <h3 class="mat-title">
+      {{pageTitle}}
+    </h3>
+      <h3 class="mat-title" *ngIf="Expense && Expense.Name" style="margin-left: 5px"><i>{{Expense.Name}}</i></h3>
+    </div>
     <form #f="ngForm" class="form-flex" (ngSubmit)="submit(f.value)">
       <mat-form-field>
         <input matInput placeholder="Name" required name="name" [(ngModel)]="Expense.Name">
@@ -17,7 +22,7 @@
         <button mat-raised-button color="warn" disabled>SCAN BILL</button>
       </div>
       <mat-action-row>
-        <button mat-raised-button (click)="goBack()">
+        <button mat-raised-button routerLink="/expenses">
           <mat-icon>close</mat-icon>
           Cancel
         </button>

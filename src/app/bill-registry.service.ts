@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ExpensesDataSet} from '../models/ExpensesDataSet';
 import {ExpenseItem} from '../models/ExpenseItem';
+import {BillItem} from '../models/BillItem';
 
 @Injectable()
 export class BillRegistryService {
@@ -25,10 +26,18 @@ export class BillRegistryService {
       this.http.get('http://localhost:3030/api/expense/' + id).map((res) => res.json()).subscribe((data) => {
 
         const dataSet = new ExpenseItem();
+        dataSet.Id = data._id;
         dataSet.Name = data.name;
         dataSet.Description = data.description;
         dataSet.Amount = data.amount;
         dataSet.CreatedAtDate = data.created;
+        if (data.bill) {
+          const bill = new BillItem();
+          bill.Id = data.bill._id;
+          bill.BillData = data.bill.billData;
+
+          dataSet.Bill = bill;
+        }
 
         resolve(dataSet);
       }, (error) => {
@@ -53,12 +62,19 @@ export class BillRegistryService {
 
   sendExpense(expense: ExpenseItem) {
     return new Promise((resolve, reject) => {
-      this.http.post('http://localhost:3030/api/expense', {
+
+      const body = {
+        id: expense.Id,
         name: expense.Name,
         description: expense.Description,
         amount: expense.Amount,
-        bill: expense.BillData
-      }).map((res) => res.json()).subscribe((data) => {
+        bill: {
+          id: expense.Bill.Id,
+          billData: expense.Bill.BillData
+        }
+      };
+
+      this.http.post('http://localhost:3030/api/expense', body).map((res) => res.json()).subscribe((data) => {
         resolve(data);
       }, (error) => {
         BillRegistryService.handleError(error, reject);

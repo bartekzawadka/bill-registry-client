@@ -8,7 +8,7 @@
             <div class="custom-list-item-subheading">{{item.created | date: 'dd-MM-yyyy HH:mm:ss'}}</div>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
-            <div class="custom-list-item-amount">{{item.amountText}} zł</div>
+            <div class="custom-list-item-amount">{{item.amount.toString().replace('.', ',')}} zł</div>
           </div>
         </div>
       </a>
