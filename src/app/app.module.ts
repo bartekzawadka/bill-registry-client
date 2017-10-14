@@ -7,7 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule, MatButtonModule, MatIconModule, MatDialogModule,
   MatProgressSpinnerModule, MatGridListModule, MatListModule,
   MatCardModule, MatPaginatorModule, MatFormFieldModule, MatInputModule,
-  MatExpansionModule, MatTooltipModule} from '@angular/material';
+  MatExpansionModule, MatTooltipModule, MatSelectModule} from '@angular/material';
 import 'hammerjs';
 import { ExpensesComponent } from './expenses/expenses.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -18,6 +18,7 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { ExpenseComponent } from './expense/expense.component';
 import {NgxCurrencyModule} from 'ngx-currency';
+import {Globals} from './globals';
 
 
 @NgModule({
@@ -35,12 +36,12 @@ import {NgxCurrencyModule} from 'ngx-currency';
     FlexLayoutModule,
     MatToolbarModule, MatButtonModule, MatIconModule, MatDialogModule, MatProgressSpinnerModule, MatGridListModule,
     MatListModule, MatCardModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
-    MatTooltipModule,
+    MatTooltipModule, MatSelectModule,
     BrowserAnimationsModule,
     NgxCurrencyModule,
     FormsModule
   ],
-  providers: [BillRegistryService],
+  providers: [BillRegistryService, Globals],
   bootstrap: [AppComponent],
   entryComponents: [LoaderDialogComponent, MessageDialogComponent]
 })

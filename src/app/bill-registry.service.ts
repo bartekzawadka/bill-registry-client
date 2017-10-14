@@ -46,10 +46,21 @@ export class BillRegistryService {
     });
   }
 
-  getExpenses(pageIndex: number = 0, pageSize: number = 50) {
+  getExpenses(searchPhrase: string,
+              pageIndex: number = 0,
+              pageSize: number = 50,
+              sortBy: string = 'created',
+              orderBy: string = 'descending') {
     return new Promise<ExpensesDataSet>((resolve, reject) => {
-      this.http.get('http://localhost:3030/api/expenses?skip=' +
-        pageIndex + '&limit=' + pageSize).map((res) => res.json()).subscribe((data) => {
+
+      let uri = 'http://localhost:3030/api/expenses?skip=' +
+        pageIndex + '&limit=' + pageSize;
+      if (searchPhrase) {
+        uri += '&searchString=' + searchPhrase;
+      }
+      uri += '&sortField=' + sortBy + '&orderBy=' + orderBy;
+
+      this.http.get(uri).map((res) => res.json()).subscribe((data) => {
 
         const dataSet = new ExpensesDataSet(data.rows, data.count, pageIndex, pageSize);
 

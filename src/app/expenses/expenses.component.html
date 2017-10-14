@@ -1,5 +1,30 @@
 <div class="list-container">
   <mat-card>
+    <div class="search-field">
+      <mat-form-field [floatPlaceholder]="'never'">
+        <input matInput placeholder="Search..." [(ngModel)]="globals.searchPhrase" (keyup.enter)="getData()">
+        <button matSuffix mat-button class="search-button" (click)="getData()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="sort-field">
+      <mat-form-field>
+        <mat-select placeholder="Sort by" [(ngModel)]="sort.sortValue" (ngModelChange)="getData()">
+          <mat-option *ngFor="let s of sort.sortOptions" [value]="s.value">
+            {{s.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Sort direction" [(ngModel)]="sort.sortDirection" (ngModelChange)="getData()">
+          <mat-option *ngFor="let d of sort.sortDirections" [value]="d.value">
+            {{d.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
     <mat-nav-list *ngIf="expenses.Rows && expenses.Rows.length > 0">
       <a mat-list-item *ngFor="let item of expenses.Rows" routerLink="/expense/{{item._id}}">
         <div fxLayout="row" fxLayoutAlign="stretch center" fxFlex class="custom-list-item-row">
@@ -14,6 +39,7 @@
       </a>
     </mat-nav-list>
     <mat-paginator [pageSize]="expenses.PageSize" [length]="expenses.TotalCount"
-                   *ngIf="expenses.Rows && expenses.Rows.length > 0"></mat-paginator>
+                   *ngIf="expenses.Rows && expenses.Rows.length > 0" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChanged($event)"></mat-paginator>
   </mat-card>
 </div>

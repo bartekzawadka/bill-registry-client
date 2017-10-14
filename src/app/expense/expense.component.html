@@ -9,13 +9,24 @@
     <form #f="ngForm" class="form-flex" (ngSubmit)="submit(f.value)">
       <mat-form-field>
         <input matInput placeholder="Name" required name="name" [(ngModel)]="Expense.Name">
+        <mat-error *ngIf="f.hasError('required', 'name')">
+          Expense name is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <textarea matInput placeholder="Description" name="description" [(ngModel)]="Expense.Description"></textarea>
       </mat-form-field>
       <mat-form-field>
         <input matInput currencyMask placeholder="Amount" name="amount"
-               [options]="{suffix: ' zł', thousands: ' ', decimal: ',', prefix: ''}" required [(ngModel)]="Expense.Amount">
+               [options]="{suffix: ' zł', thousands: ' ', decimal: ',', prefix: ''}" required
+               [(ngModel)]="Expense.Amount"
+               pattern="^((0?0?\.([1-9]\d*|0[1-9]\d*))|(([1-9]|0[1-9])\d*(\.\d+)?))$" >
+        <mat-error *ngIf="f.hasError('required', 'amount')">
+          Expense amount is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="f.hasError('pattern', 'amount')">
+          Expense amount must be non-negative value (at least 0,01 zł)
+        </mat-error>
       </mat-form-field>
       <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;"
            matTooltip="Feature not supported yet!">

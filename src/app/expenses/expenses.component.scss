@@ -24,3 +24,23 @@
 .mat-nav-list .mat-list-item .mat-list-item-content {
   height: auto !important;
 }
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.search-field > * {
+  width: 100%;
+}
+
+.sort-field {
+  padding: 0 16px;
+}
+
+.search-button {
+  min-width: 5px !important;
+  padding: 0 4px !important;
+  color: mat-color($mat-grey, 500);
+}

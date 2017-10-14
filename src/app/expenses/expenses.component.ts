@@ -5,6 +5,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
 import {ExpensesDataSet} from '../../models/ExpensesDataSet';
 import 'rxjs/add/operator/map';
+import {Globals} from '../globals';
 
 @Component({
   selector: 'app-expenses',
@@ -15,9 +16,33 @@ import 'rxjs/add/operator/map';
 export class ExpensesComponent implements OnInit {
 
   private expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
+  private sort = {
+    sortOptions: [{
+      title: 'Name',
+      value: 'name'
+    }, {
+      title: 'Date of creation',
+      value: 'created'
+    }, {
+      title: 'Amount',
+      value: 'amount'
+    }],
+    sortDirections: [{
+      title: 'Ascending',
+      value: 'ascending'
+    }, {
+      title: 'Descending',
+      value: 'descending'
+    }],
+    sortValue: 'created',
+    sortDirection: 'descending'
+  };
+
+  pageSizeOptions = [5, 10, 25, 50, 100];
 
   constructor(private brService: BillRegistryService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public globals: Globals) {
     this.getData();
   }
 
@@ -29,7 +54,12 @@ export class ExpensesComponent implements OnInit {
       disableClose: true
     });
 
-    this.brService.getExpenses(this.expenses.PageIndex, this.expenses.PageSize).then((data) => {
+    this.brService.getExpenses(this.globals.searchPhrase,
+      this.expenses.PageIndex,
+      this.expenses.PageSize,
+      this.sort.sortValue,
+      this.sort.sortDirection)
+      .then((data) => {
       this.expenses = data;
       dialogRef.close();
     }, (error) => {
@@ -45,6 +75,12 @@ export class ExpensesComponent implements OnInit {
       });
     });
 
+  }
+
+  pageChanged(pageEvent) {
+    this.expenses.PageIndex = pageEvent.pageIndex;
+    this.expenses.PageSize = pageEvent.pageSize;
+    this.getData();
   }
 
 }
