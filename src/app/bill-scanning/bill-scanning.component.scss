@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+img.scanned {
+  height: 200px; /** Sets the display size */
+  margin-right: 12px;
+}
+
+#scannedImage {
+  border: mat-color($mat-grey, 500) 1px solid;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

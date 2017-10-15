@@ -28,9 +28,10 @@
           Expense amount must be non-negative value (at least 0,01 zł)
         </mat-error>
       </mat-form-field>
-      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;"
-           matTooltip="Feature not supported yet!">
-        <button mat-raised-button color="warn" disabled>SCAN BILL</button>
+      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;">
+        <button mat-raised-button color="warn" (click)="scan()" type="button">
+          <mat-icon>scanner</mat-icon>
+          SCAN BILL</button>
       </div>
       <mat-action-row>
         <button mat-raised-button routerLink="/expenses">
@@ -43,7 +44,8 @@
             <mat-icon>clear_all</mat-icon>
             Clear
           </button>
-          <button mat-raised-button color="accent" type="submit" [disabled]="!f.valid">
+          <button mat-raised-button color="accent" type="submit"
+                  [disabled]="!f.valid || !Expense.Bill || !Expense.Bill.BillData">
             <mat-icon>send</mat-icon>
             Submit
           </button>

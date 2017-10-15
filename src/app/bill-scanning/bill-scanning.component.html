@@ -1,0 +1,36 @@
+<div>
+  <div fxLayout="row" fxFlex fxLayoutAlign="stretch center">
+    <div fxFlex>
+      <h4 class="mat-title" style="margin: 0 auto;">Scan document</h4>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content>
+  <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <mat-form-field>
+      <mat-select placeholder="Select output format..." [(ngModel)]="formatsOptions.SelectedValue">
+        <mat-option *ngFor="let f of formatsOptions.Options" [value]="f.Value">
+          {{f.Title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="warn" (click)="scan()">
+      <mat-icon>scanner</mat-icon>SCAN</button>
+    <div *ngIf="imageScanned">
+      <div id="scannedImage" *ngIf="imageScanned && imageScanned.src"></div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div fxLayout="row" fxFlex>
+    <button mat-raised-button (click)="cancel()">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <div fxFlex></div>
+    <button mat-raised-button color="primary" [disabled]="!imageScanned"
+            [mat-dialog-close]="imageScanned">
+      <mat-icon>save</mat-icon>
+      Save</button>
+  </div>
+</div>

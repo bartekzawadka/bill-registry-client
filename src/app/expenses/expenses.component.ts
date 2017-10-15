@@ -60,20 +60,21 @@ export class ExpensesComponent implements OnInit {
       this.sort.sortValue,
       this.sort.sortDirection)
       .then((data) => {
-      this.expenses = data;
-      dialogRef.close();
-    }, (error) => {
-      dialogRef.close();
-
-      this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
-        disableClose: true,
-        data: {
-          title: 'Error',
-          message: error,
-          type: 'error'
-        }
+        this.expenses = data;
+        dialogRef.close();
+      }, (error) => {
+        dialogRef.close();
+        dialogRef.afterClosed().subscribe(() => {
+          this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+            disableClose: true,
+            data: {
+              title: 'Error',
+              message: error,
+              type: 'error'
+            }
+          });
+        });
       });
-    });
 
   }
 

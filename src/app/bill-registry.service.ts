@@ -35,6 +35,7 @@ export class BillRegistryService {
           const bill = new BillItem();
           bill.Id = data.bill._id;
           bill.BillData = data.bill.billData;
+          bill.MimeType = data.bill.mimeType;
 
           dataSet.Bill = bill;
         }
@@ -81,7 +82,8 @@ export class BillRegistryService {
         amount: expense.Amount,
         bill: {
           id: expense.Bill.Id,
-          billData: expense.Bill.BillData
+          billData: expense.Bill.BillData,
+          mimeType: expense.Bill.MimeType
         }
       };
 

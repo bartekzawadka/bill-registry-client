@@ -19,6 +19,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { ExpenseComponent } from './expense/expense.component';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {Globals} from './globals';
+import { BillScanningComponent } from './bill-scanning/bill-scanning.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {Globals} from './globals';
     ExpensesComponent,
     LoaderDialogComponent,
     MessageDialogComponent,
-    ExpenseComponent
+    ExpenseComponent,
+    BillScanningComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,7 @@ import {Globals} from './globals';
   ],
   providers: [BillRegistryService, Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoaderDialogComponent, MessageDialogComponent]
+  entryComponents: [LoaderDialogComponent, MessageDialogComponent, BillScanningComponent]
 })
 export class AppModule {
   constructor() { }

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ExpenseItem} from '../../models/ExpenseItem';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import {BillRegistryService} from '../bill-registry.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
 import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {BillItem} from '../../models/BillItem';
+import {BillScanningComponent} from '../bill-scanning/bill-scanning.component';
 
 @Component({
   selector: 'app-expense',
@@ -24,7 +25,6 @@ export class ExpenseComponent implements OnInit {
               private brService: BillRegistryService,
               public dialog: MatDialog) {
     this.Expense.Bill = new BillItem();
-    this.Expense.Bill.BillData = 'TEST BILL DATA';
 
     this.route.params.subscribe((p: Params) => {
       if (p && p['id']) {
@@ -40,13 +40,15 @@ export class ExpenseComponent implements OnInit {
           dialogRef.close();
         }).catch((error) => {
           dialogRef.close();
-          this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
-            disableClose: true,
-            data: {
-              title: 'Operation failed',
-              message: error,
-              type: 'error'
-            }
+          dialogRef.afterClosed().subscribe(() => {
+            this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+              disableClose: true,
+              data: {
+                title: 'Operation failed',
+                message: error,
+                type: 'error'
+              }
+            });
           });
         });
       } else {
@@ -60,7 +62,7 @@ export class ExpenseComponent implements OnInit {
 
   submit() {
 
-    const dialogRef = this.dialog.open(LoaderDialogComponent, <MatDialogConfig>{
+    let dialogRef = this.dialog.open(LoaderDialogComponent, <MatDialogConfig>{
       disableClose: true
     });
 
@@ -69,14 +71,32 @@ export class ExpenseComponent implements OnInit {
       this.router.navigate(['/expenses']);
     }, (error) => {
       dialogRef.close();
-      this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
-        disableClose: true,
-        data: {
-          title: 'Operation failed',
-          message: error,
-          type: 'error'
-        }
+      dialogRef.afterClosed().subscribe(() => {
+        dialogRef = this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+          disableClose: true,
+          data: {
+            title: 'Operation failed',
+            message: error,
+            type: 'error'
+          }
+        });
       });
+    });
+  }
+
+  scan() {
+
+    const me = this;
+
+    const ref = this.dialog.open(BillScanningComponent, <MatDialogConfig>{
+      disableClose: true
+    });
+
+    ref.afterClosed().subscribe(billData => {
+      if (billData) {
+        me.Expense.Bill.BillData = billData.src;
+        me.Expense.Bill.MimeType = billData.mimeType;
+      }
     });
   }
 
