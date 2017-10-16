@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ExpenseItem} from '../../models/ExpenseItem';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -8,11 +8,14 @@ import {MessageDialogComponent} from '../message-dialog/message-dialog.component
 import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {BillItem} from '../../models/BillItem';
 import {BillScanningComponent} from '../bill-scanning/bill-scanning.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import {ImageEnlargeComponent} from '../image-enlarge/image-enlarge.component';
 
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
-  styleUrls: ['./expense.component.scss']
+  styleUrls: ['./expense.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExpenseComponent implements OnInit {
 
@@ -23,7 +26,8 @@ export class ExpenseComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private brService: BillRegistryService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public sanitizer: DomSanitizer) {
     this.Expense.Bill = new BillItem();
 
     this.route.params.subscribe((p: Params) => {
@@ -96,6 +100,15 @@ export class ExpenseComponent implements OnInit {
       if (billData) {
         me.Expense.Bill.BillData = billData.src;
         me.Expense.Bill.MimeType = billData.mimeType;
+      }
+    });
+  }
+
+  enlarge() {
+    this.dialog.open(ImageEnlargeComponent, <MatDialogConfig>{
+      panelClass: 'full-screen-dialog',
+      data: {
+        imgSrc: this.Expense.Bill.BillData
       }
     });
   }

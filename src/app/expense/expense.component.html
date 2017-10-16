@@ -1,9 +1,9 @@
 <div class="list-container">
   <mat-card>
     <div fxLayout="row">
-    <h3 class="mat-title">
-      {{pageTitle}}
-    </h3>
+      <h3 class="mat-title">
+        {{pageTitle}}
+      </h3>
       <h3 class="mat-title" *ngIf="Expense && Expense.Name" style="margin-left: 5px"><i>{{Expense.Name}}</i></h3>
     </div>
     <form #f="ngForm" class="form-flex" (ngSubmit)="submit(f.value)">
@@ -20,7 +20,7 @@
         <input matInput currencyMask placeholder="Amount" name="amount"
                [options]="{suffix: ' zł', thousands: ' ', decimal: ',', prefix: ''}" required
                [(ngModel)]="Expense.Amount"
-               pattern="^((0?0?\.([1-9]\d*|0[1-9]\d*))|(([1-9]|0[1-9])\d*(\.\d+)?))$" >
+               pattern="^((0?0?\.([1-9]\d*|0[1-9]\d*))|(([1-9]|0[1-9])\d*(\.\d+)?))$">
         <mat-error *ngIf="f.hasError('required', 'amount')">
           Expense amount is <strong>required</strong>
         </mat-error>
@@ -28,10 +28,31 @@
           Expense amount must be non-negative value (at least 0,01 zł)
         </mat-error>
       </mat-form-field>
-      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;">
+      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;"
+           *ngIf="!Expense.Bill.BillData">
         <button mat-raised-button color="warn" (click)="scan()" type="button">
           <mat-icon>scanner</mat-icon>
-          SCAN BILL</button>
+          SCAN BILL
+        </button>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.BillData">
+        <div>
+          <img (click)="enlarge()"
+               [src]="sanitizer.bypassSecurityTrustUrl(Expense.Bill.BillData)" height="250" class="bill-preview"
+          matTooltip="Click to enlarge" [matTooltipPosition]="'after'">
+        </div>
+        <div style="margin: 20px;">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+            <button mat-raised-button color="accent" (click)="scan()" type="button">
+              <mat-icon>mode_edit</mat-icon>
+              CHANGE
+            </button>
+            <button mat-raised-button color="warn" type="button">
+              <mat-icon>file_download</mat-icon>
+              Download
+            </button>
+          </div>
+        </div>
       </div>
       <mat-action-row>
         <button mat-raised-button routerLink="/expenses">

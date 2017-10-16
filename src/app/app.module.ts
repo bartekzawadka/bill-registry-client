@@ -20,6 +20,7 @@ import { ExpenseComponent } from './expense/expense.component';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {Globals} from './globals';
 import { BillScanningComponent } from './bill-scanning/bill-scanning.component';
+import { ImageEnlargeComponent } from './image-enlarge/image-enlarge.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { BillScanningComponent } from './bill-scanning/bill-scanning.component';
     LoaderDialogComponent,
     MessageDialogComponent,
     ExpenseComponent,
-    BillScanningComponent
+    BillScanningComponent,
+    ImageEnlargeComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,7 @@ import { BillScanningComponent } from './bill-scanning/bill-scanning.component';
   ],
   providers: [BillRegistryService, Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoaderDialogComponent, MessageDialogComponent, BillScanningComponent]
+  entryComponents: [LoaderDialogComponent, MessageDialogComponent, BillScanningComponent, ImageEnlargeComponent]
 })
 export class AppModule {
   constructor() { }

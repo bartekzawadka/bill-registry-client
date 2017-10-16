@@ -1,0 +1,15 @@
+<div>
+  <div fxLayout="row" fxFlex fxLayoutAlign="stretch center">
+    <div fxFlex>
+      <h4 class="mat-title" style="margin: 0 auto;">Scanned document preview</h4>
+    </div>
+  </div>
+</div>
+<div>
+  <img [src]="sanitizer.bypassSecurityTrustUrl(data.imgSrc)" width="100%">
+</div>
+<div mat-dialog-actions>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex>
+    <button mat-raised-button (click)="close()">Close</button>
+  </div>
+</div>

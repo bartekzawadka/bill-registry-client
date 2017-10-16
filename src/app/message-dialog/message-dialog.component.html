@@ -9,8 +9,6 @@
   <div fxFlex fxLayout="row" fxLayoutAlign="start center">
     <div style="padding-right: 15px" *ngIf="data.type">
       <mat-icon class="icon-{{data.type}}">{{data.type}}</mat-icon>
-      <!--<mat-icon color="{{mat-color($mat-red, 800)}}" *ngIf="type.color != 'red'">{{type.icon}}</mat-icon>-->
-      <!--<mat-icon *ngIf="type.color == 'red'" class="icon-error">{{type.icon}}</mat-icon>-->
     </div>
     <p class="mat-body-2">{{data.message}}</p>
   </div>

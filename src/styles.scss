@@ -75,3 +75,9 @@ mat-progress-spinner.small svg{
 #com_asprise_scan_app_ok {
   display: none !important;
 }
+
+.full-screen-dialog .mat-dialog-container {
+  max-width: none;
+  width: 97vw;
+  height: 97vh;
+}
