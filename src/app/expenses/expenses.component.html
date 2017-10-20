@@ -34,6 +34,11 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
             <div class="custom-list-item-amount">{{item.amount.toString().replace('.', ',')}} zł</div>
+            <a href="http://onet.pl">
+            <div class="mime-type-icon" matTooltip="{{item.bill.mimeType? 'Download bill' : ''}}">
+              <mat-icon>{{getIcon(item.bill.mimeType)}}</mat-icon>
+            </div>
+            </a>
           </div>
         </div>
       </a>

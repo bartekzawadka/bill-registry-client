@@ -44,3 +44,10 @@
   padding: 0 4px !important;
   color: mat-color($mat-grey, 500);
 }
+
+.mime-type-icon {
+  width: 24px;
+  height: 24px;
+  color: mat-color($candy-app-warn, 500);
+  margin-left: 10px;
+}

@@ -3,3 +3,18 @@
 img.bill-preview {
   border: mat-color($mat-grey, 500) 1px solid;
 }
+
+.upload-button {
+  input {
+    display: none;
+  }
+
+}
+
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-list.files-list {
+  margin-bottom: 20px;
+}

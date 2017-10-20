@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptions, RequestOptionsArgs} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ExpensesDataSet} from '../models/ExpensesDataSet';
 import {ExpenseItem} from '../models/ExpenseItem';
@@ -19,6 +19,14 @@ export class BillRegistryService {
     } else {
       reject(error);
     }
+  }
+
+  private static appendToForm(form: FormData, name: string, item: any) {
+    if (item) {
+      form.append(name, item.toString());
+    }
+
+    return form;
   }
 
   getExpense(id) {
@@ -75,19 +83,32 @@ export class BillRegistryService {
   sendExpense(expense: ExpenseItem) {
     return new Promise((resolve, reject) => {
 
-      const body = {
-        id: expense.Id,
-        name: expense.Name,
-        description: expense.Description,
-        amount: expense.Amount,
-        bill: {
-          id: expense.Bill.Id,
-          billData: expense.Bill.BillData,
-          mimeType: expense.Bill.MimeType
-        }
-      };
+      // const body = {
+      //   id: expense.Id,
+      //   name: expense.Name,
+      //   description: expense.Description,
+      //   amount: expense.Amount.toString(),
+      //   billId: expense.Bill.Id,
+      //   billData: expense.Bill.BillData,
+      //   billMimeType: expense.Bill.MimeType
+      // };
 
-      this.http.post('http://localhost:3030/api/expense', body).map((res) => res.json()).subscribe((data) => {
+      let formData = new FormData();
+      formData = BillRegistryService.appendToForm(formData, 'id', expense.Id);
+      formData = BillRegistryService.appendToForm(formData, 'name', expense.Name);
+      formData = BillRegistryService.appendToForm(formData, 'description', expense.Description);
+      formData = BillRegistryService.appendToForm(formData, 'amount', expense.Amount);
+      formData = BillRegistryService.appendToForm(formData, 'billId', expense.Bill.Id);
+      formData = BillRegistryService.appendToForm(formData, 'billData', expense.Bill.BillData);
+      formData = BillRegistryService.appendToForm(formData, 'billMimeType', expense.Bill.MimeType);
+      if (expense.Bill && expense.Bill.BillFile) {
+        formData.append('file', expense.Bill.BillFile, expense.Bill.BillFile.name);
+      }
+
+      const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+      const options = new RequestOptions(<RequestOptionsArgs>{headers: headers});
+
+      this.http.post('http://localhost:3030/api/expense', formData, options).map((res) => res.json()).subscribe((data) => {
         resolve(data);
       }, (error) => {
         BillRegistryService.handleError(error, reject);

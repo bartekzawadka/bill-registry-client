@@ -28,18 +28,38 @@
           Expense amount must be non-negative value (at least 0,01 zł)
         </mat-error>
       </mat-form-field>
-      <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="margin-top: 40px; margin-bottom: 40px;"
+      <div fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px"
+           style="margin-top: 40px; margin-bottom: 40px;"
            *ngIf="!Expense.Bill.BillData">
         <button mat-raised-button color="warn" (click)="scan()" type="button">
           <mat-icon>scanner</mat-icon>
           SCAN BILL
         </button>
+        <label class="upload-button">
+          <input type="file" #uploader name="file" (change)="inputChanged($event)">
+          <a class="mat-raised-button mat-accent">
+            <span class="mat-button-wrapper">
+              <mat-icon>attachment</mat-icon>
+              CHOOSE FILE
+            </span>
+          </a>
+        </label>
       </div>
+      <mat-list *ngIf="Expense.Bill.BillFile" class="files-list">
+        <mat-list-item>
+          <mat-icon mat-list-icon>
+            insert_drive_file
+          </mat-icon>
+          <h4 mat-line>{{Expense.Bill.BillFile.name}}</h4>
+          <p mat-line>{{humanizeBytes(Expense.Bill.BillFile.size)}}</p>
+        </mat-list-item>
+      </mat-list>
+
       <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.BillData">
         <div>
           <img (click)="enlarge()"
                [src]="sanitizer.bypassSecurityTrustUrl(Expense.Bill.BillData)" height="250" class="bill-preview"
-          matTooltip="Click to enlarge" [matTooltipPosition]="'after'">
+               matTooltip="Click to enlarge" [matTooltipPosition]="'after'">
         </div>
         <div style="margin: 20px;">
           <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
@@ -65,8 +85,9 @@
             <mat-icon>clear_all</mat-icon>
             Clear
           </button>
+          <!--|| !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile)-->
           <button mat-raised-button color="accent" type="submit"
-                  [disabled]="!f.valid || !Expense.Bill || !Expense.Bill.BillData">
+                  [disabled]="!f.valid ">
             <mat-icon>send</mat-icon>
             Submit
           </button>

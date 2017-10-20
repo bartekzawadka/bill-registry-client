@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, EventEmitter } from '@angular/core';
 import {ExpenseItem} from '../../models/ExpenseItem';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -10,6 +10,7 @@ import {BillItem} from '../../models/BillItem';
 import {BillScanningComponent} from '../bill-scanning/bill-scanning.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import {ImageEnlargeComponent} from '../image-enlarge/image-enlarge.component';
+import { humanizeBytes } from '../utilities';
 
 @Component({
   selector: 'app-expense',
@@ -19,9 +20,9 @@ import {ImageEnlargeComponent} from '../image-enlarge/image-enlarge.component';
 })
 export class ExpenseComponent implements OnInit {
 
-  private Expense: ExpenseItem = new ExpenseItem();
-  private expenseId: number;
-  private pageTitle: string;
+  Expense: ExpenseItem = new ExpenseItem();
+  pageTitle: string;
+  humanizeBytes: Function;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -29,6 +30,7 @@ export class ExpenseComponent implements OnInit {
               public dialog: MatDialog,
               public sanitizer: DomSanitizer) {
     this.Expense.Bill = new BillItem();
+    this.humanizeBytes = humanizeBytes;
 
     this.route.params.subscribe((p: Params) => {
       if (p && p['id']) {
@@ -62,6 +64,13 @@ export class ExpenseComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  inputChanged(ev) {
+    if (ev.target.files && ev.target.files.length > 0) {
+      this.Expense.Bill.BillFile = ev.target.files[0];
+      this.Expense.Bill.MimeType = ev.target.files[0].type;
+    }
   }
 
   submit() {

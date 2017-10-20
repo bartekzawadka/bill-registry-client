@@ -84,4 +84,16 @@ export class ExpensesComponent implements OnInit {
     this.getData();
   }
 
+  getIcon(mimeType) {
+    switch (mimeType) {
+      default:
+        return null;
+      case 'image/png':
+      case 'image/jpeg':
+        return 'photo';
+      case 'application/pdf':
+        return 'picture_as_pdf';
+    }
+  }
+
 }
