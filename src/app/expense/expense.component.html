@@ -32,29 +32,11 @@
            style="margin-top: 40px; margin-bottom: 40px;"
            *ngIf="!Expense.Bill.BillData">
         <button mat-raised-button color="warn" (click)="scan()" type="button">
-          <mat-icon>scanner</mat-icon>
-          SCAN BILL
+          <mat-icon>receipt</mat-icon>
+          ATTACH BILL
         </button>
-        <label class="upload-button">
-          <input type="file" #uploader name="file" (change)="inputChanged($event)">
-          <a class="mat-raised-button mat-accent">
-            <span class="mat-button-wrapper">
-              <mat-icon>attachment</mat-icon>
-              CHOOSE FILE
-            </span>
-          </a>
-        </label>
       </div>
-      <mat-list *ngIf="Expense.Bill.BillFile" class="files-list">
-        <mat-list-item>
-          <mat-icon mat-list-icon>
-            insert_drive_file
-          </mat-icon>
-          <h4 mat-line>{{Expense.Bill.BillFile.name}}</h4>
-          <p mat-line>{{humanizeBytes(Expense.Bill.BillFile.size)}}</p>
-        </mat-list-item>
-      </mat-list>
-
+      <app-files-list *ngIf="Expense.Bill.BillFile" [data]="[Expense.Bill.BillFile]"></app-files-list>
       <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.BillData">
         <div>
           <img (click)="enlarge()"
@@ -87,7 +69,7 @@
           </button>
           <!--|| !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile)-->
           <button mat-raised-button color="accent" type="submit"
-                  [disabled]="!f.valid ">
+                  [disabled]="!f.valid || !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile)">
             <mat-icon>send</mat-icon>
             Submit
           </button>

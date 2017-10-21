@@ -1,23 +1,28 @@
-import {ChangeDetectorRef, Component, Inject, ViewEncapsulation, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, ViewEncapsulation} from '@angular/core';
 import {OptionSet} from '../../models/OptionSet';
 import {OptionItem} from '../../models/OptionItem';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {DialogResult} from '../../interfaces/dialog-result';
+import {BillAcquisitionResult} from '../../models/BillAcquisitionResult';
+
 declare let scanner;
 
 @Component({
   selector: 'app-bill-scanning',
-  templateUrl: './bill-scanning.component.html',
-  styleUrls: ['./bill-scanning.component.scss'],
+  templateUrl: './bill-acquisition.component.html',
+  styleUrls: ['./bill-acquisition.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BillScanningComponent {
-  public imageScanned: any;
+export class BillAcquisitionComponent implements DialogResult<BillAcquisitionResult> {
+  Result: BillAcquisitionResult;
   formatsOptions: OptionSet<string>;
 
-  constructor(public dialogRef: MatDialogRef<BillScanningComponent>,
+  constructor(public dialogRef: MatDialogRef<BillAcquisitionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public ref: ChangeDetectorRef,
-              private _renderer: Renderer2) {
+              public ref: ChangeDetectorRef) {
+
+    this.Result = new BillAcquisitionResult();
+
     this.formatsOptions = new OptionSet<string>();
     this.formatsOptions.SelectedValue = 'png';
     this.formatsOptions.Options = [
@@ -27,11 +32,17 @@ export class BillScanningComponent {
     ];
   }
 
+  inputChanged(ev) {
+    if (ev.target.files && ev.target.files.length > 0) {
+      this.Result.FileData = ev.target.files;
+    }
+  }
+
   scan() {
 
     const me = this;
 
-    const displayImagesOnPage = function(successfull, mesg, response) {
+    const displayImagesOnPage = function (successfull, mesg, response) {
       if (!successfull) {
         console.log('Failed: ' + mesg);
         return;
@@ -44,8 +55,6 @@ export class BillScanningComponent {
 
       const images = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
       if (images && images.length > 0) {
-        console.log(images[0]);
-
         const scannedImageDiv = document.getElementById('scannedImage');
         if (scannedImageDiv) {
           scannedImageDiv.innerHTML = '';
@@ -53,13 +62,14 @@ export class BillScanningComponent {
 
         const img = new Image();
         img.height = 400;
-        img.onload = function(){
+        img.onload = function () {
           document.getElementById('scannedImage').appendChild(img);
         };
+
         img.src = images[0].src;
 
-         me.imageScanned = images[0];
-         me.ref.detectChanges();
+        me.Result.ScannedImage = images[0];
+        me.ref.detectChanges();
       }
     };
 
@@ -74,6 +84,7 @@ export class BillScanningComponent {
   }
 
   cancel() {
+    this.Result.clear();
     this.dialogRef.close();
   }
 

@@ -19,8 +19,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { ExpenseComponent } from './expense/expense.component';
 import {NgxCurrencyModule} from 'ngx-currency';
 import {Globals} from './globals';
-import { BillScanningComponent } from './bill-scanning/bill-scanning.component';
+import { BillAcquisitionComponent } from './bill-acquisition/bill-acquisition.component';
 import { ImageEnlargeComponent } from './image-enlarge/image-enlarge.component';
+import { FilesListComponent } from './files-list/files-list.component';
 
 
 @NgModule({
@@ -30,8 +31,9 @@ import { ImageEnlargeComponent } from './image-enlarge/image-enlarge.component';
     LoaderDialogComponent,
     MessageDialogComponent,
     ExpenseComponent,
-    BillScanningComponent,
-    ImageEnlargeComponent
+    BillAcquisitionComponent,
+    ImageEnlargeComponent,
+    FilesListComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,7 @@ import { ImageEnlargeComponent } from './image-enlarge/image-enlarge.component';
   ],
   providers: [BillRegistryService, Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoaderDialogComponent, MessageDialogComponent, BillScanningComponent, ImageEnlargeComponent]
+  entryComponents: [LoaderDialogComponent, MessageDialogComponent, BillAcquisitionComponent, ImageEnlargeComponent]
 })
 export class AppModule {
   constructor() { }

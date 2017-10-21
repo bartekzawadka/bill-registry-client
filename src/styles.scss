@@ -81,3 +81,11 @@ mat-progress-spinner.small svg{
   width: 97vw;
   height: 97vh;
 }
+
+.half-screen-dialog .mat-dialog-container {
+  min-width: 50vw;
+}
+
+app-files-list {
+  width: 100%;
+}
