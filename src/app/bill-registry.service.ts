@@ -5,6 +5,7 @@ import {ExpensesDataSet} from '../models/ExpensesDataSet';
 import {ExpenseItem} from '../models/ExpenseItem';
 import {BillItem} from '../models/BillItem';
 import {FileResult} from '../models/FileResult';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class BillRegistryService {
@@ -32,7 +33,7 @@ export class BillRegistryService {
 
   getExpense(id) {
     return new Promise<ExpenseItem>((resolve, reject) => {
-      this.http.get('http://localhost:3030/api/expense/' + id).map((res) => res.json()).subscribe((data) => {
+      this.http.get(environment.brServiceUrl + '/api/expense/' + id).map((res) => res.json()).subscribe((data) => {
 
         const dataSet = new ExpenseItem();
         dataSet.Id = data._id;
@@ -63,7 +64,7 @@ export class BillRegistryService {
               orderBy: string = 'descending') {
     return new Promise<ExpensesDataSet>((resolve, reject) => {
 
-      let uri = 'http://localhost:3030/api/expenses?skip=' +
+      let uri = environment.brServiceUrl + '/api/expenses?skip=' +
         pageIndex + '&limit=' + pageSize;
       if (searchPhrase) {
         uri += '&searchString=' + searchPhrase;
@@ -109,7 +110,7 @@ export class BillRegistryService {
       const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
       const options = new RequestOptions(<RequestOptionsArgs>{headers: headers});
 
-      this.http.post('http://localhost:3030/api/expense', formData, options).map((res) => res.json()).subscribe((data) => {
+      this.http.post(environment.brServiceUrl + '/api/expense', formData, options).map((res) => res.json()).subscribe((data) => {
         resolve(data);
       }, (error) => {
         BillRegistryService.handleError(error, reject);
@@ -119,7 +120,7 @@ export class BillRegistryService {
 
   getBill(id) {
     return new Promise<FileResult>((resolve, reject) => {
-      this.http.get('http://localhost:3030/api/bill/' + id, {responseType: ResponseContentType.Blob})
+      this.http.get(environment.brServiceUrl + '/api/bill/' + id, {responseType: ResponseContentType.Blob})
         .subscribe((data) => {
           console.log(data);
 
