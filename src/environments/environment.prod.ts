@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  brServiceUrl: 'http://bill-registry-service.azurewebsites.net'
+  brServiceUrl: 'http://bill-registry-service.azurewebsites.net:8080'
 };
