@@ -85,6 +85,18 @@ export class ExpensesComponent implements OnInit {
     this.getData();
   }
 
+  getIcon(mimeType) {
+    switch (mimeType) {
+      default:
+        return 'insert_drive_file';
+      case 'image/png':
+      case 'image/jpeg':
+        return 'photo';
+      case 'application/pdf':
+        return 'picture_as_pdf';
+    }
+  }
+
   downloadBill(id) {
 
     this.brService.getBill(id).then((data) => {
