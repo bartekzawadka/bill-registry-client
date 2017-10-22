@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, EventEmitter } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {ExpenseItem} from '../../models/ExpenseItem';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
@@ -8,8 +8,9 @@ import {MessageDialogComponent} from '../message-dialog/message-dialog.component
 import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {BillItem} from '../../models/BillItem';
 import {BillAcquisitionComponent} from '../bill-acquisition/bill-acquisition.component';
-import { DomSanitizer } from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {ImageEnlargeComponent} from '../image-enlarge/image-enlarge.component';
+import {saveAs} from 'file-saver/FileSaver';
 
 @Component({
   selector: 'app-expense',
@@ -120,4 +121,33 @@ export class ExpenseComponent implements OnInit {
     });
   }
 
+  downloadBill() {
+
+    this.brService.getBill(this.Expense.Bill.Id).then((data) => {
+      try {
+        saveAs(data.FileData, data.FileName);
+      } catch (e) {
+
+        const error = 'Unable to process data from server: ' + e;
+
+        this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+          disableClose: true,
+          data: {
+            title: 'Operation failed',
+            message: error,
+            type: 'error'
+          }
+        });
+      }
+    }, (error) => {
+        this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+          disableClose: true,
+          data: {
+            title: 'Operation failed',
+            message: error,
+            type: 'error'
+          }
+        });
+    });
+  }
 }

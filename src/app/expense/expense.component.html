@@ -38,7 +38,7 @@
       </div>
       <app-files-list *ngIf="Expense.Bill.BillFile" [data]="[Expense.Bill.BillFile]"></app-files-list>
       <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.BillData">
-        <div>
+        <div *ngIf="Expense.Bill.MimeType && Expense.Bill.MimeType.includes('image')">
           <img (click)="enlarge()"
                [src]="sanitizer.bypassSecurityTrustUrl(Expense.Bill.BillData)" height="250" class="bill-preview"
                matTooltip="Click to enlarge" [matTooltipPosition]="'after'">
@@ -49,7 +49,7 @@
               <mat-icon>mode_edit</mat-icon>
               CHANGE
             </button>
-            <button mat-raised-button color="warn" type="button">
+            <button mat-raised-button color="warn" type="button" (click)="downloadBill()">
               <mat-icon>file_download</mat-icon>
               Download
             </button>

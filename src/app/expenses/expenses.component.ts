@@ -4,6 +4,7 @@ import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
 import {ExpensesDataSet} from '../../models/ExpensesDataSet';
+import {saveAs} from 'file-saver/FileSaver';
 import 'rxjs/add/operator/map';
 import {Globals} from '../globals';
 
@@ -87,7 +88,7 @@ export class ExpensesComponent implements OnInit {
   getIcon(mimeType) {
     switch (mimeType) {
       default:
-        return null;
+        return 'insert_drive_file';
       case 'image/png':
       case 'image/jpeg':
         return 'photo';
@@ -96,4 +97,33 @@ export class ExpensesComponent implements OnInit {
     }
   }
 
+  downloadBill(id) {
+
+    this.brService.getBill(id).then((data) => {
+      try {
+        saveAs(data.FileData, data.FileName);
+      } catch (e) {
+
+        const error = 'Unable to process data from server: ' + e;
+
+        this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+          disableClose: true,
+          data: {
+            title: 'Operation failed',
+            message: error,
+            type: 'error'
+          }
+        });
+      }
+    }, (error) => {
+      this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+        disableClose: true,
+        data: {
+          title: 'Operation failed',
+          message: error,
+          type: 'error'
+        }
+      });
+    });
+  }
 }

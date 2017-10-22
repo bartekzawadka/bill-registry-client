@@ -48,6 +48,13 @@
 .mime-type-icon {
   width: 24px;
   height: 24px;
-  color: mat-color($candy-app-warn, 500);
+  color: mat-color($candy-app-accent, 600);
   margin-left: 10px;
+}
+
+a.mat-list-item {
+  mat-icon.mat-icon.mat-list-icon {
+    color: mat-color($candy-app-warn, 500);
+    margin-right: 10px;
+  }
 }

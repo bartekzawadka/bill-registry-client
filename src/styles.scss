@@ -16,10 +16,6 @@ html {
   src: url('assets/fonts/Kabel Book BT.ttf');
 }
 
-//.mat-toolbar.mat-primary{
-//  background: #006699;
-//}
-
 div.site-title {
   font-family: KabelFamily;
   font-weight: 100;
@@ -48,13 +44,8 @@ mat-progress-spinner.small svg{
   max-width: 960px;
   margin: 0 auto;
   padding-top: 20px;
+  padding-bottom: 50px;
 }
-
-//.list-container{
-//  max-width: 700px;
-//  margin: 0 auto;
-//  padding-top: 20px;
-//}
 
 .form-flex {
   width: 100%;

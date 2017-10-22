@@ -26,25 +26,32 @@
     </div>
     <mat-divider></mat-divider>
     <mat-nav-list *ngIf="expenses.Rows && expenses.Rows.length > 0">
-      <a mat-list-item *ngFor="let item of expenses.Rows" routerLink="/expense/{{item._id}}">
-        <div fxLayout="row" fxLayoutAlign="stretch center" fxFlex class="custom-list-item-row">
-          <div fxFlex>
-            <div class="custom-list-item-heading">{{item.name}}</div>
-            <div class="custom-list-item-subheading">{{item.created | date: 'dd-MM-yyyy HH:mm:ss'}}</div>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <div class="custom-list-item-amount">{{item.amount.toString().replace('.', ',')}} zł</div>
-            <a href="http://onet.pl">
-            <div class="mime-type-icon" matTooltip="{{item.bill.mimeType? 'Download bill' : ''}}">
-              <mat-icon>{{getIcon(item.bill.mimeType)}}</mat-icon>
+      <div *ngFor="let item of expenses.Rows" fxLayout="row">
+        <div fxFlex fxLayout="row">
+          <a mat-list-item routerLink="/expense/{{item._id}}" fxFlex>
+            <mat-icon matListIcon>{{getIcon(item.bill.mimeType)}}</mat-icon>
+            <div fxLayout="row" fxLayoutAlign="stretch center" fxFlex class="custom-list-item-row">
+              <div fxFlex>
+                <div class="custom-list-item-heading">{{item.name}}</div>
+                <div class="custom-list-item-subheading">{{item.created | date: 'dd-MM-yyyy HH:mm:ss'}}</div>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div class="custom-list-item-amount">{{item.amount.toString().replace('.', ',')}} zł</div>
+              </div>
             </div>
+          </a>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <a href="javascript:void(0)" (click)="downloadBill(item.bill._id)">
+              <div class="mime-type-icon" matTooltip="{{item.bill.mimeType? 'Download bill' : ''}}">
+                <mat-icon>file_download</mat-icon>
+              </div>
             </a>
           </div>
         </div>
-      </a>
+      </div>
     </mat-nav-list>
     <mat-paginator [pageSize]="expenses.PageSize" [length]="expenses.TotalCount"
                    *ngIf="expenses.Rows && expenses.Rows.length > 0" [pageSizeOptions]="pageSizeOptions"
-                    (page)="pageChanged($event)"></mat-paginator>
+                   (page)="pageChanged($event)"></mat-paginator>
   </mat-card>
 </div>
