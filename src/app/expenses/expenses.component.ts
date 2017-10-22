@@ -16,8 +16,8 @@ import {Globals} from '../globals';
 })
 export class ExpensesComponent implements OnInit {
 
-  private expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
-  private sort = {
+  expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
+  sort = {
     sortOptions: [{
       title: 'Name',
       value: 'name'
@@ -83,18 +83,6 @@ export class ExpensesComponent implements OnInit {
     this.expenses.PageIndex = pageEvent.pageIndex;
     this.expenses.PageSize = pageEvent.pageSize;
     this.getData();
-  }
-
-  getIcon(mimeType) {
-    switch (mimeType) {
-      default:
-        return 'insert_drive_file';
-      case 'image/png':
-      case 'image/jpeg':
-        return 'photo';
-      case 'application/pdf':
-        return 'picture_as_pdf';
-    }
   }
 
   downloadBill(id) {
