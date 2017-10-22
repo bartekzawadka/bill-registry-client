@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 //@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
 @import "app-theme";
 
 body {
@@ -26,10 +25,10 @@ div.site-title {
 }
 
 .spacer {
-  flex: 1 1 auto;
+  flex: auto;
 }
 
-mat-progress-spinner.small svg{
+mat-progress-spinner.small svg {
   width: 50px !important;
   height: 50px !important;
 }
@@ -79,4 +78,20 @@ mat-progress-spinner.small svg{
 
 app-files-list {
   width: 100%;
+}
+
+.app-toolbar {
+  background: mat-color($candy-app-primary, 500);
+  min-height: 56px;
+  padding: 0 16px;
+  font-size: 20px;
+}
+
+.app-toolbar .mat-button {
+  color: white;
+}
+
+.app-toolbar-buttons {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

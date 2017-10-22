@@ -1,9 +1,11 @@
 import {ChangeDetectorRef, Component, Inject, ViewEncapsulation} from '@angular/core';
 import {OptionSet} from '../../models/OptionSet';
 import {OptionItem} from '../../models/OptionItem';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog} from '@angular/material';
 import {DialogResult} from '../../interfaces/dialog-result';
 import {BillAcquisitionResult} from '../../models/BillAcquisitionResult';
+import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
+import {Globals} from '../globals';
 
 declare let scanner;
 
@@ -19,10 +21,11 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
 
   constructor(public dialogRef: MatDialogRef<BillAcquisitionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public ref: ChangeDetectorRef) {
+              public ref: ChangeDetectorRef,
+              public dialog: MatDialog,
+              public globals: Globals) {
 
     this.Result = new BillAcquisitionResult();
-
     this.formatsOptions = new OptionSet<string>();
     this.formatsOptions.SelectedValue = 'png';
     this.formatsOptions.Options = [
@@ -30,6 +33,17 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
       new OptionItem('JPEG', 'jpeg'),
       new OptionItem('PDF', 'pdf')
     ];
+  }
+
+  private displayCannotConnectToScanJs() {
+    this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+      disableClose: true,
+      data: {
+        title: 'Operation failed',
+        message: 'Scanner.Js middleware could not be found',
+        type: 'error'
+      }
+    });
   }
 
   inputChanged(ev) {
@@ -73,14 +87,31 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
       }
     };
 
-    scanner.scan(displayImagesOnPage, {
-      'output_settings': [
-        {
-          'type': 'return-base64',
-          'format': this.formatsOptions.SelectedValue
+    try {
+
+      if (this.globals.scanJsFailDetected) {
+        this.displayCannotConnectToScanJs();
+        return;
+      }
+
+      scanner.scan(displayImagesOnPage, {
+        'output_settings': [
+          {
+            'type': 'return-base64',
+            'format': this.formatsOptions.SelectedValue
+          }
+        ]
+      });
+    } catch (e) {
+      this.dialog.open(MessageDialogComponent, <MatDialogConfig>{
+        disableClose: true,
+        data: {
+          title: 'Operation failed',
+          message: e,
+          type: 'error'
         }
-      ]
-    });
+      });
+    }
   }
 
   cancel() {
