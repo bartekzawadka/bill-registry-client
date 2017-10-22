@@ -18,7 +18,6 @@ declare let scanner;
 export class BillAcquisitionComponent implements DialogResult<BillAcquisitionResult> {
   Result: BillAcquisitionResult;
   formatsOptions: OptionSet<string>;
-  private failDetected = false;
 
   constructor(public dialogRef: MatDialogRef<BillAcquisitionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
