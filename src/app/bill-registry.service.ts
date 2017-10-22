@@ -122,8 +122,6 @@ export class BillRegistryService {
     return new Promise<FileResult>((resolve, reject) => {
       this.http.get(environment.brServiceUrl + '/api/bill/' + id, {responseType: ResponseContentType.Blob})
         .subscribe((data) => {
-          console.log(data);
-
           try {
 
             if (!data || !data.headers) {

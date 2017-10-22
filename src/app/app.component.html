@@ -1,17 +1,20 @@
-<mat-toolbar color="primary">
-  <img src="../assets/img/logo_reversed_60.png" height="60">
-  <div class="site-title">Bill Registry</div>
-  <span class="spacer"></span>
-  <div fxLayout="row" fxLayoutGap="15px">
-    <button mat-button routerLink="expenses">
-      <mat-icon>list</mat-icon>
-      Expenses
-    </button>
-    <button mat-raised-button color="accent" routerLink="expense">
-      <mat-icon>add</mat-icon>
-      New expense
-    </button>
+<div class="app-toolbar">
+  <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="start center" fxLayoutAlign="stretch center">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="start center" >
+      <img src="../assets/img/logo_reversed_60.png" height="60">
+      <div class="site-title">Bill Registry</div>
+    </div>
+    <div fxFlex></div>
+    <div fxLayout="row" fxLayoutGap="15px" class.xs="app-toolbar-buttons">
+      <button mat-button routerLink="expenses">
+        <mat-icon>list</mat-icon>
+        Expenses
+      </button>
+      <button mat-raised-button color="accent" routerLink="expense">
+        <mat-icon>add</mat-icon>
+        New expense
+      </button>
+    </div>
   </div>
-</mat-toolbar>
+</div>
 <router-outlet></router-outlet>
-
