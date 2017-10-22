@@ -9,4 +9,6 @@ IF "%SITE_FLAVOR%" == "nodejs" (
     echo You have to set SITE_FLAVOR setting to either "nodejs" or "mvc4"
     exit /b 1
   )
+) ELSE (
+  deploy.node.cmd
 )
