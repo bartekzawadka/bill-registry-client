@@ -78,7 +78,7 @@ selectNodeVersion () {
       exitWithMessageOnError "getting node version failed"
     fi
 
-    if [[ -e "$DEPLOYMENT_TEMP/__npmVersion.tmp" ]]; then
+    if [[ -e "$DEPLOYMENT_TEMP/.tmp" ]]; then
       NPM_JS_PATH=`cat "$DEPLOYMENT_TEMP/__npmVersion.tmp"`
       exitWithMessageOnError "getting npm version failed"
     fi
@@ -118,19 +118,11 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
-# 4. Install Bower modules
+# 4. Angular Prod Build
 if [ -e "$DEPLOYMENT_TARGET/.angular-cli.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval ./node_modules/.bin/ng build --prod
   exitWithMessageOnError "Angular build failed"
-  cd - > /dev/null
-fi
-
-# 5. Run Gulp Task
-if [ -e "$DEPLOYMENT_TARGET/gulpfile.js" ]; then
-  cd "$DEPLOYMENT_TARGET"
-  eval ./node_modules/.bin/gulp prod
-  exitWithMessageOnError "gulp failed"
   cd - > /dev/null
 fi
 
@@ -145,4 +137,3 @@ if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
 fi
 
 echo "Finished successfully."
-
