@@ -16,8 +16,8 @@ import {Globals} from '../globals';
 })
 export class ExpensesComponent implements OnInit {
 
-  private expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
-  private sort = {
+  expenses: ExpensesDataSet = new ExpensesDataSet(null, 0, 0, 50);
+  sort = {
     sortOptions: [{
       title: 'Name',
       value: 'name'
