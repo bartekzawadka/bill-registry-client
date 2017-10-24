@@ -37,7 +37,7 @@
         </button>
       </div>
       <app-files-list *ngIf="Expense.Bill.BillFile" [data]="[Expense.Bill.BillFile]"></app-files-list>
-      <div fxLayout="column" fxLayoutAlign="center center" >
+      <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.Id">
         <div *ngIf="Expense.Thumbnail">
           <img (click)="enlarge()"
                [src]="sanitizer.bypassSecurityTrustUrl(Expense.Thumbnail)" height="400" class="bill-preview"
