@@ -67,12 +67,21 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
         return;
       }
 
-      const images = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+      let images = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+      if (images && images.length > 0) {
+        me.Result.ScannedImage = images[0];
+        me.ref.detectChanges();
+      }
+
+      images = scanner.getScannedImages(response, false, true);
       if (images && images.length > 0) {
         const scannedImageDiv = document.getElementById('scannedImage');
         if (scannedImageDiv) {
           scannedImageDiv.innerHTML = '';
         }
+
+        me.Result.Thumbnail = images[0];
+        me.ref.detectChanges();
 
         const img = new Image();
         img.height = 400;
@@ -81,9 +90,6 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
         };
 
         img.src = images[0].src;
-
-        me.Result.ScannedImage = images[0];
-        me.ref.detectChanges();
       }
     };
 
@@ -99,6 +105,11 @@ export class BillAcquisitionComponent implements DialogResult<BillAcquisitionRes
           {
             'type': 'return-base64',
             'format': this.formatsOptions.SelectedValue
+          },
+          {
+            'type': 'return-base64-thumbnail',
+            'format': 'jpg',
+            'thumbnail_height': 400
           }
         ]
       });
