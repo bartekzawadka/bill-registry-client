@@ -32,8 +32,8 @@
       </label>
     </div>
     <app-files-list  *ngIf="Result.FileData" [data]="Result.FileData"></app-files-list>
-    <div *ngIf="Result.ScannedImage">
-      <div id="scannedImage" *ngIf="Result.ScannedImage && Result.ScannedImage.src"></div>
+    <div *ngIf="Result.Thumbnail">
+      <div id="scannedImage" *ngIf="Result.Thumbnail && Result.Thumbnail.src"></div>
     </div>
   </div>
 </div>

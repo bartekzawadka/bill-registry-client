@@ -8,6 +8,7 @@ export class ExpenseItem {
   public Amount = 0;
   public Bill: BillItem;
   public CreatedAtDate: Date;
+  public Thumbnail: any;
 
   constructor() {
   }

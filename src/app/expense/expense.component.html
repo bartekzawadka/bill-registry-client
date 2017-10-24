@@ -30,17 +30,17 @@
       </mat-form-field>
       <div fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px"
            style="margin-top: 40px; margin-bottom: 40px;"
-           *ngIf="!Expense.Bill.BillData">
+           *ngIf="!Expense.Id">
         <button mat-raised-button color="warn" (click)="scan()" type="button">
           <mat-icon>receipt</mat-icon>
           ATTACH BILL
         </button>
       </div>
       <app-files-list *ngIf="Expense.Bill.BillFile" [data]="[Expense.Bill.BillFile]"></app-files-list>
-      <div fxLayout="column" fxLayoutAlign="center center" *ngIf="Expense.Bill.BillData">
-        <div *ngIf="Expense.Bill.MimeType && Expense.Bill.MimeType.includes('image')">
+      <div fxLayout="column" fxLayoutAlign="center center" >
+        <div *ngIf="Expense.Thumbnail">
           <img (click)="enlarge()"
-               [src]="sanitizer.bypassSecurityTrustUrl(Expense.Bill.BillData)" height="250" class="bill-preview"
+               [src]="sanitizer.bypassSecurityTrustUrl(Expense.Thumbnail)" height="400" class="bill-preview"
                matTooltip="Click to enlarge" [matTooltipPosition]="'after'">
         </div>
         <div style="margin: 20px;">
@@ -69,7 +69,7 @@
           </button>
           <!--|| !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile)-->
           <button mat-raised-button color="accent" type="submit"
-                  [disabled]="!f.valid || !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile)">
+                  [disabled]="!f.valid || !Expense.Bill || (!Expense.Bill.BillData && !Expense.Bill.BillFile && !Expense.Bill.Id)">
             <mat-icon>send</mat-icon>
             Submit
           </button>

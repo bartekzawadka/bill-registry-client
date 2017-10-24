@@ -41,14 +41,20 @@ export class BillRegistryService {
         dataSet.Description = data.description;
         dataSet.Amount = data.amount;
         dataSet.CreatedAtDate = data.created;
-        if (data.bill) {
-          const bill = new BillItem();
-          bill.Id = data.bill._id;
-          bill.BillData = data.bill.billData;
-          bill.MimeType = data.bill.mimeType;
+        dataSet.Thumbnail = data.thumbnail;
 
-          dataSet.Bill = bill;
+        const bill = new BillItem();
+        bill.Id = data.bill;
+
+        if (data.billFile) {
+          bill.BillFile = {
+            name: data.billFile.name,
+            size: data.billFile.size,
+            type: data.mimeType
+          };
         }
+
+        dataSet.Bill = bill;
 
         resolve(dataSet);
       }, (error) => {
@@ -103,6 +109,7 @@ export class BillRegistryService {
       formData = BillRegistryService.appendToForm(formData, 'billId', expense.Bill.Id);
       formData = BillRegistryService.appendToForm(formData, 'billData', expense.Bill.BillData);
       formData = BillRegistryService.appendToForm(formData, 'billMimeType', expense.Bill.MimeType);
+      formData = BillRegistryService.appendToForm(formData, 'thumbnail', expense.Thumbnail);
       if (expense.Bill && expense.Bill.BillFile) {
         formData.append('file', expense.Bill.BillFile, expense.Bill.BillFile.name);
       }

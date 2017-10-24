@@ -101,12 +101,14 @@ export class ExpenseComponent implements OnInit {
       if (billData) {
         if (billData.FileData && billData.FileData.length > 0) {
           me.Expense.Bill.BillData = null;
+          me.Expense.Thumbnail = null;
           me.Expense.Bill.BillFile = billData.FileData[0];
           me.Expense.Bill.MimeType = billData.FileData[0].type;
         } else if (billData.ScannedImage) {
           me.Expense.Bill.BillFile = null;
           me.Expense.Bill.BillData = billData.ScannedImage.src;
           me.Expense.Bill.MimeType = billData.ScannedImage.mimeType;
+          me.Expense.Thumbnail = billData.Thumbnail.src;
         }
       }
     });
