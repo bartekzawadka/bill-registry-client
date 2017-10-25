@@ -2,21 +2,40 @@
   <mat-card>
     <div class="search-field">
       <mat-form-field [floatPlaceholder]="'never'">
-        <input matInput placeholder="Search..." [(ngModel)]="globals.searchPhrase" (keyup.enter)="getData()">
+        <input matInput placeholder="Search..." [(ngModel)]="globals.expensesFilter.SearchPhrase" (keyup.enter)="getData()">
         <button matSuffix mat-button class="search-button" (click)="getData()">
           <mat-icon>search</mat-icon>
         </button>
       </mat-form-field>
     </div>
-    <div class="sort-field">
-      <mat-form-field>
+    <div class="filtering-sorting-fields-row" fxLayout="row" fxLayout.xs="column">
+      <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
+          <input matInput [matDatepicker]="pickerFrom" placeholder="Date from" [(ngModel)]="globals.expensesFilter.DateFrom" (dateChange)="getData()">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
+          <input matInput [matDatepicker]="pickerTo" placeholder="Date to" [(ngModel)]="globals.expensesFilter.DateTo" (dateChange)="getData()">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>    
+      <div fxFlex></div>
+      <div fxLayout="row" fxLayoutAlign="end center" class.xs="vertical-padding-buttons">
+        <button mat-raised-button (click)="clearFilter()">
+          <mat-icon>clear_all</mat-icon>
+          Clear filters
+        </button>
+      </div>
+    </div>
+    <div class="filtering-sorting-fields-row">
+      <mat-form-field class.xs="full-width-field">
         <mat-select placeholder="Sort by" [(ngModel)]="sort.sortValue" (ngModelChange)="getData()">
           <mat-option *ngFor="let s of sort.sortOptions" [value]="s.value">
             {{s.title}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class.xs="full-width-field">
         <mat-select placeholder="Sort direction" [(ngModel)]="sort.sortDirection" (ngModelChange)="getData()">
           <mat-option *ngFor="let d of sort.sortDirections" [value]="d.value">
             {{d.title}}

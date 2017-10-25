@@ -4,6 +4,7 @@ import {LoaderDialogComponent} from '../loader-dialog/loader-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {MessageDialogComponent} from '../message-dialog/message-dialog.component';
 import {ExpensesDataSet} from '../../models/ExpensesDataSet';
+import {ExpensesFilter} from '../../models/ExpensesFilter';
 import {saveAs} from 'file-saver/FileSaver';
 import 'rxjs/add/operator/map';
 import {Globals} from '../globals';
@@ -55,7 +56,7 @@ export class ExpensesComponent implements OnInit {
       disableClose: true
     });
 
-    this.brService.getExpenses(this.globals.searchPhrase,
+    this.brService.getExpenses(this.globals.expensesFilter,
       this.expenses.PageIndex,
       this.expenses.PageSize,
       this.sort.sortValue,
@@ -77,6 +78,11 @@ export class ExpensesComponent implements OnInit {
         });
       });
 
+  }
+
+  clearFilter() {
+    this.globals.expensesFilter = new ExpensesFilter();
+    this.getData();
   }
 
   pageChanged(pageEvent) {

@@ -35,7 +35,15 @@
   width: 100%;
 }
 
-.sort-field {
+.full-width-field {
+  width: 100%;
+}
+
+.full-width-field > * {
+  width: 100%;
+}
+
+.filtering-sorting-fields-row {
   padding: 0 16px;
 }
 

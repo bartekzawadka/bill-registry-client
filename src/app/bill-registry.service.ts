@@ -5,6 +5,7 @@ import {ExpensesDataSet} from '../models/ExpensesDataSet';
 import {ExpenseItem} from '../models/ExpenseItem';
 import {BillItem} from '../models/BillItem';
 import {FileResult} from '../models/FileResult';
+import {ExpensesFilter} from '../models/ExpensesFilter';
 import { environment } from '../environments/environment';
 
 @Injectable()
@@ -63,7 +64,7 @@ export class BillRegistryService {
     });
   }
 
-  getExpenses(searchPhrase: string,
+  getExpenses(filter: ExpensesFilter,
               pageIndex: number = 0,
               pageSize: number = 50,
               sortBy: string = 'created',
@@ -72,8 +73,16 @@ export class BillRegistryService {
 
       let uri = environment.brServiceUrl + '/api/expenses?skip=' +
         pageIndex + '&limit=' + pageSize;
-      if (searchPhrase) {
-        uri += '&searchString=' + searchPhrase;
+      if (filter) {
+        if (filter.SearchPhrase) {
+          uri += '&searchString=' + filter.SearchPhrase;
+        }
+        if (filter.DateFrom) {
+          uri += '&createdFrom=' + filter.DateFrom;
+        }
+        if (filter.DateTo) {
+          uri += '&createdTo=' + filter.DateTo;
+        }
       }
       uri += '&sortField=' + sortBy + '&orderBy=' + orderBy;
 

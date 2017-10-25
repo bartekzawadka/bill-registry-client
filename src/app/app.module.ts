@@ -7,7 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule, MatButtonModule, MatIconModule, MatDialogModule,
   MatProgressSpinnerModule, MatGridListModule, MatListModule,
   MatCardModule, MatPaginatorModule, MatFormFieldModule, MatInputModule,
-  MatExpansionModule, MatTooltipModule, MatSelectModule} from '@angular/material';
+  MatExpansionModule, MatTooltipModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import 'hammerjs';
 import { ExpensesComponent } from './expenses/expenses.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -42,7 +42,7 @@ import { FilesListComponent } from './files-list/files-list.component';
     FlexLayoutModule,
     MatToolbarModule, MatButtonModule, MatIconModule, MatDialogModule, MatProgressSpinnerModule, MatGridListModule,
     MatListModule, MatCardModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatExpansionModule,
-    MatTooltipModule, MatSelectModule,
+    MatTooltipModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
     BrowserAnimationsModule,
     NgxCurrencyModule,
     FormsModule

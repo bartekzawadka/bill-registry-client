@@ -91,7 +91,11 @@ app-files-list {
   color: white;
 }
 
-.app-toolbar-buttons {
+.vertical-padding-buttons {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+.mat-form-field-datepicker {
+  padding-right: 5px;
 }
