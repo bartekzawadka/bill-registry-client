@@ -1,10 +1,11 @@
 <div class="list-container">
   <mat-card>
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayoutAlign="start center">
       <h3 class="mat-title">
         {{pageTitle}}
       </h3>
       <h3 class="mat-title" *ngIf="Expense && Expense.Name" style="margin-left: 5px"><i>{{Expense.Name}}</i></h3>
+      <span class="expense-date-subheading" *ngIf="Expense.Id"> ({{Expense.CreatedAtDate | date: 'dd-MM-yyyy HH:mm:ss'}}) </span>
     </div>
     <form #f="ngForm" class="form-flex" (ngSubmit)="submit()">
       <mat-form-field>
@@ -15,6 +16,19 @@
       </mat-form-field>
       <mat-form-field>
         <textarea matInput placeholder="Description" name="description" [(ngModel)]="Expense.Description"></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput name="expenseDateInput" [max]="maxExpenseDate" [matDatepicker]="expenseDate"
+               placeholder="Expense date" [(ngModel)]="Expense.ExpenseDate"
+               required>
+        <mat-datepicker-toggle matSuffix [for]="expenseDate"></mat-datepicker-toggle>
+        <mat-datepicker #expenseDate></mat-datepicker>
+        <mat-error *ngIf="f.hasError('required', 'expenseDateInput')">
+          Expense date is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="f.hasError('matDatepickerMax', 'expenseDateInput')">
+          Expense date cannot look into future
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input matInput currencyMask placeholder="Amount" name="amount"

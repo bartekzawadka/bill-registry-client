@@ -43,6 +43,7 @@ export class BillRegistryService {
         dataSet.Amount = data.amount;
         dataSet.CreatedAtDate = data.created;
         dataSet.Thumbnail = data.thumbnail;
+        dataSet.ExpenseDate = data.expenseDate;
 
         const bill = new BillItem();
         bill.Id = data.bill;
@@ -77,11 +78,17 @@ export class BillRegistryService {
         if (filter.SearchPhrase) {
           uri += '&searchString=' + filter.SearchPhrase;
         }
-        if (filter.DateFrom) {
-          uri += '&createdFrom=' + filter.DateFrom;
+        if (filter.CreatedFrom) {
+          uri += '&createdFrom=' + filter.CreatedFrom;
         }
-        if (filter.DateTo) {
-          uri += '&createdTo=' + filter.DateTo;
+        if (filter.CreatedTo) {
+          uri += '&createdTo=' + filter.CreatedTo;
+        }
+        if (filter.ExpenseDateFrom) {
+          uri += '&expenseDateFrom=' + filter.ExpenseDateFrom;
+        }
+        if (filter.ExpenseDateTo) {
+          uri += '&expenseDateTo=' + filter.ExpenseDateTo;
         }
       }
       uri += '&sortField=' + sortBy + '&orderBy=' + orderBy;
@@ -119,6 +126,7 @@ export class BillRegistryService {
       formData = BillRegistryService.appendToForm(formData, 'billData', expense.Bill.BillData);
       formData = BillRegistryService.appendToForm(formData, 'billMimeType', expense.Bill.MimeType);
       formData = BillRegistryService.appendToForm(formData, 'thumbnail', expense.Thumbnail);
+      formData = BillRegistryService.appendToForm(formData, 'expenseDate', expense.ExpenseDate);
       if (expense.Bill && expense.Bill.BillFile) {
         formData.append('file', expense.Bill.BillFile, expense.Bill.BillFile.name);
       }

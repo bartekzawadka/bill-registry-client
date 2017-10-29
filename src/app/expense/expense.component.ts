@@ -22,6 +22,7 @@ export class ExpenseComponent implements OnInit {
 
   Expense: ExpenseItem = new ExpenseItem();
   pageTitle: string;
+  maxExpenseDate = new Date(Date.now());
 
   constructor(private route: ActivatedRoute,
               private router: Router,

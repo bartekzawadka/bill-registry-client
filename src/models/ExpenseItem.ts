@@ -6,8 +6,9 @@ export class ExpenseItem {
   public Name: string;
   public Description: string;
   public Amount = 0;
-  public Bill: BillItem;
   public CreatedAtDate: Date;
+  public Bill: BillItem;
+  public ExpenseDate: Date;
   public Thumbnail: any;
 
   constructor() {

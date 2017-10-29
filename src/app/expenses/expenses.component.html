@@ -10,15 +10,27 @@
     </div>
     <div class="filtering-sorting-fields-row" fxLayout="row" fxLayout.xs="column">
       <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
-          <input matInput [matDatepicker]="pickerFrom" placeholder="Date from" [(ngModel)]="globals.expensesFilter.DateFrom" (dateChange)="getData()">
-          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFrom></mat-datepicker>
+        <input matInput [matDatepicker]="expenseFrom" placeholder="Expense date from" [(ngModel)]="globals.expensesFilter.ExpenseDateFrom" (dateChange)="getData()">
+        <mat-datepicker-toggle matSuffix [for]="expenseFrom"></mat-datepicker-toggle>
+        <mat-datepicker #expenseFrom></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
-          <input matInput [matDatepicker]="pickerTo" placeholder="Date to" [(ngModel)]="globals.expensesFilter.DateTo" (dateChange)="getData()">
-          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-          <mat-datepicker #pickerTo></mat-datepicker>
-      </mat-form-field>    
+        <input matInput [matDatepicker]="expenseTo" placeholder="Expense date to" [(ngModel)]="globals.expensesFilter.ExpenseDateTo" (dateChange)="getData()">
+        <mat-datepicker-toggle matSuffix [for]="expenseTo"></mat-datepicker-toggle>
+        <mat-datepicker #expenseTo></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="filtering-sorting-fields-row" fxLayout="row" fxLayout.xs="column">
+      <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
+          <input matInput [matDatepicker]="createdFrom" placeholder="Creation date from" [(ngModel)]="globals.expensesFilter.CreatedFrom" (dateChange)="getData()">
+          <mat-datepicker-toggle matSuffix [for]="createdFrom"></mat-datepicker-toggle>
+          <mat-datepicker #createdFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="mat-form-field-datepicker" class.xs="full-width-field">
+          <input matInput [matDatepicker]="createdTo" placeholder="Creation date to" [(ngModel)]="globals.expensesFilter.CreatedTo" (dateChange)="getData()">
+          <mat-datepicker-toggle matSuffix [for]="createdTo"></mat-datepicker-toggle>
+          <mat-datepicker #createdTo></mat-datepicker>
+      </mat-form-field>
       <div fxFlex></div>
       <div fxLayout="row" fxLayoutAlign="end center" class.xs="vertical-padding-buttons">
         <button mat-raised-button (click)="clearFilter()">

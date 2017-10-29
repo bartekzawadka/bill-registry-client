@@ -3,3 +3,10 @@
 img.bill-preview {
   border: mat-color($mat-grey, 500) 1px solid;
 }
+
+.expense-date-subheading {
+  font-size: 0.7em;
+  color: mat-color($mat-grey, 600);
+  padding-left: 5px;
+  margin-bottom: 16px;
+}

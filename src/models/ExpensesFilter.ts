@@ -1,7 +1,9 @@
 export class ExpensesFilter {
     SearchPhrase: String;
-    DateFrom: Date;
-    DateTo: Date;
+    CreatedFrom: Date;
+    CreatedTo: Date;
+    ExpenseDateFrom: Date;
+    ExpenseDateTo: Date;
 
     constructor() {}
 }
